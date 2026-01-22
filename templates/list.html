@@ -1,0 +1,18 @@
+<html>
+    <body>
+        <table border = 1>
+            <thead>
+                <td> ProductID </td>
+                <td> ProductName</td>
+                <td> ProductCost</td>
+            </thead>
+            {% for var in t_records%}
+            <tr>
+                <td>{{var['pid']}}</td>
+                <td>{{var['pname']}}</td>
+                <td>{{var['pcost']}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </body>
+</html>
