@@ -1,0 +1,197 @@
+ 
+ from concurrent.futures import ThreadPoolExecutor
+
+ import sqlite3
+
+ def connect_db(db_name):
+	return SQLite3.connect(db_name)
+
+
+dbs = [ f"db_{i}.db" for i in range(1,101)]
+
+with ThreadPoolExecutor(max_workers=10) as executor:
+	connections=list(executor.map(connect_db,dbs))
+
+
+
+from psycopg2.pool import SimpleConnectionPool
+
+
+pool = SimpleConnectionPool(
+    ...
+)
+
+----------------------------------
+register.html - online registration
+						demo2.py
+		----------------------------->  POST - dict format
+						| ====================> To database
+						| ======search/filter=====>
+						|  =========get the data from DB===
+						|		|___
+						|		    |
+						render_template('display.html',Tvar=..)
+									|
+									jinja2 template
+									|->display results
+
+
+in python ---->Any database
+
+1. import <DB-Module>
+
+2. <DB-Module>.connect() -> connection_object
+
+3. connection_object.cursor() -->statement_object
+
+4. statement_object.execute('DB-Query')
+			     |
+			  select statement ->statement_object
+						|
+					    statement_object.fetchone() ->tuple - 1row
+					    statement_object.fetchall() ->list of tuple -> [(),(),(),..()]
+					    statement_object.fetchmany(n=3) ->list of tuple
+						<or>
+					   apply generator logic 
+						  |-> next(gen_object) -> ... StopIterator
+							<or>
+						  |-> for loop 
+						        <or>
+						  |-> typecast to list -> list(statement_object)
+							
+...
+5. connection_object.commit()
+..
+6. connect_object.close()
+			
+
+
+
+
+(lab2) C:\Users\karth\lab2\App>python
+Python 3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> import sqlite3
+>>>
+>>> sqlite3.connect("test1.db")
+<sqlite3.Connection object at 0x0000029124FE1840>
+>>>
+>>> conn = sqlite3.connect("test1.db")
+>>> conn.cursor()
+<sqlite3.Cursor object at 0x00000291254CD440>
+>>>
+>>> sth = conn.cursor()
+>>>
+>>> sth.execute("create table emp(ename TEXT,ecost INT)")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> sth.execute("insert into emp(ename,ecost) values('arun',1000)")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> sth.execute("insert into emp(ename,ecost) values('vijay',2000)")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> sth.execute("insert into emp(ename,ecost) values('leo',3000)")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> va = 'anu'
+>>> vb = 3450
+>>>
+>>> sth.execute("insert into emp(ename,ecost) values(?,?)",(va,vb))
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> sth.execute("select *from emp")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> sth.fetchone()
+('arun', 1000)
+>>> sth.fetchone()
+('vijay', 2000)
+>>> sth.fetchone()
+('leo', 3000)
+>>> sth.fetchone()
+('anu', 3450)
+>>> sth.fetchone()
+>>>
+>>> sth.execute("select *from emp")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> sth.fetchall()
+[('arun', 1000), ('vijay', 2000), ('leo', 3000), ('anu', 3450)]
+>>>
+>>> sth.execute("select *from emp")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> list(sth)
+[('arun', 1000), ('vijay', 2000), ('leo', 3000), ('anu', 3450)]
+>>>
+>>> sth.execute("select *from emp")
+<sqlite3.Cursor object at 0x00000291254CD740>
+>>>
+>>> for var in sth:
+...     print(var)
+...
+('arun', 1000)
+('vijay', 2000)
+('leo', 3000)
+('anu', 3450)
+>>> conn.commit()
+>>> conn.close()
+>>> exit()
+
+(lab2) C:\Users\karth\lab2\App>python
+Python 3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> import sqlite3
+>>> con = sqlite3.connect("test1.db")
+>>> sth = con.cursor()
+>>> sth.execute("select *from emp")
+<sqlite3.Cursor object at 0x0000021F9C16D740>
+>>> list(sth)
+[('arun', 1000), ('vijay', 2000), ('leo', 3000), ('anu', 3450)]
+>>> exit()
+
+(lab2) C:\Users\karth\lab2\App>dir
+ Volume in drive C is OS
+ Volume Serial Number is 3E30-0B4D
+
+ Directory of C:\Users\karth\lab2\App
+
+22-01-2026  08:36    <DIR>          .
+19-01-2026  09:06    <DIR>          ..
+19-01-2026  09:45               885 demo1.py
+21-01-2026  08:55               942 demo2.py
+22-01-2026  07:52                 0 demo3.py
+21-01-2026  08:42    <DIR>          templates
+22-01-2026  08:36             8,192 test1.db
+               4 File(s)         10,019 bytes
+               3 Dir(s)  722,853,437,440 bytes free
+
+(lab2) C:\Users\karth\lab2\App>	
+
+>>>
+>>> import flask
+>>>
+>>> flask.__file__
+'C:\\Users\\karth\\lab2\\lib\\site-packages\\flask\\__init__.py'
+>>>
+>>> exit()
+
+(lab2) C:\Users\karth\lab2\App>pip show flask
+Name: Flask
+Version: 3.1.2
+Summary: A simple framework for building complex web applications.
+Home-page:
+Author:
+Author-email:
+License:
+Location: c:\users\karth\lab2\lib\site-packages
+Requires: blinker, werkzeug, click, jinja2, markupsafe, itsdangerous
+Required-by:
+
+(lab2) C:\Users\karth\lab2\App>
+
+
+	

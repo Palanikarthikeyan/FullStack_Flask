@@ -1,0 +1,138 @@
+Flask
+-----
+ | - Microframe work 
+      |
+     project/
+          |->app.py
+	  |->templates/
+                  -> file.html file.css
+
+	  |->static/
+		 ->file.js
+      
+====================================================== 
+CommonGatewayInterface(CGI)
+-----------------------------
+ |->developer - develop the code + admin task
+
+ ServerCode -> /cgi-bin/...
+ |				
+ Client Code -->/var/www/html/..	
+ |
+ DB file 
+ ...
+ |
+ start the service - manually 
+ |
+ Error - complex
+ ===================================================
+ Flask
+-----
+ | - Microframe work 
+      |
+     project/
+          |->app.py
+	  |->templates/
+                  -> file.html file.css
+
+	  |->static/
+		 ->file.js
+
+ |->Wekzeug - WSGI 
+ |->jinja2 template - dynamic result 
+	
+ ############################################################
+
+ import requests
+
+ requests.get(URL) ->return_code
+			|---------->headers -->webheader info //response Type;server;URL...
+
+			|------->text -->str(WebContent)
+
+
+ Client--------request------->----Server---------invoke the Server Script-----....
+ 										|
+		--------------<-------------------------------------------------
+				1. Webpage response = <html>...{{data}}..</html>
+
+				2. Data response = json - data only - not htmlTag
+
+
+----------------------------------------------------------------------------------------
+URLBuilding
+|
+route()-decorator 
+	--------- 
+
+import flask
+
+flask.Flask
+	|
+	className - Constructor - current module 
+					|-> __name__
+
+
+import flask
+
+obj = flask.Flask(__name__)
+
+@obj.route('/')
+def f1():
+	return '<h1>Welcome to Flask App</h1>'
+
+@obj.route('/aboutus')
+def f2():
+	return '<h2>This is About us page</h2>'
+
+
+if __name__ == '__main__':
+	obj.run()
+
+
+obj.run(host="",port=,debug=")
+		      
+default host = 127.0.0.1
+default port = 5000
+default debug = False
+
+###################
+python virtual env
+|
+activate vitrual env
+|
+install - flask + supporting libs 
+	  |
+	develop  - application
+
+
+ int
+ str
+ path
+ ------
+
+ <data_type:Variable>
+
+
+url_for() - dynamically build the url
+---------
+ |
+url_for(functionName)
+
+return redirect(url_for(functionName))
+       --------------------------------
+				
+
+##########################################################################################
+
+
+							
+
+
+
+
+
+
+
+
+

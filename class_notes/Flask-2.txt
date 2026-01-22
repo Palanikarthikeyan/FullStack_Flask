@@ -1,0 +1,88 @@
+jinja2 template
+------------------
+{{variable}}
+
+{% if condition %}
+
+   {{code block}}
+
+{% endif %}
+
+{% for variable in collection %}
+
+  {{code block}}
+
+{%endfor%}
+------------------------
+
+<html>.....{{var}}..</html> //filename.html
+	 ---------
+
+title()
+upper()
+...
+###############################################################
+
+   FlaskCode(app.py)
+ +-------------------+
+ |		     |
+ +-------------------+
+ 		|_________________templates/
+						....
+						.... --->response file (page) 
+
+
+
+ onlineRegistration(file.html)
++------------------+
+|                 |
+|   ...           |
+|  (Submit)       |
+|     |           |
++     |____________ ____________________ FlaskCode(app.py) ...... templates/
+		 					|________ Database
+								 ...
+
+HTTP Protocol
+---------------
+GET - send data - unencrypted - cached by server 
+POST - send data(html form) - not cached by server
+PUT - replace - modification - uploaded content will modify
+DELETE - remove 
+|
+HEAD - Same as GET but without response body section
+|->header info (ex: import requests 
+                    r = requests.get(URL)
+                    r.headers )
+
+
+
+
+
+
+
+<form action = response URL method="post">
+	       ------------
+...
+<input type = "submit" value="submit>
+</form>		|
+
+
+file: register.html
+<html>
+<body>
+<form action = "http://127.0.0.1:1234/myservers" method = "post">
+<p>Enter a login name:</p>
+<p><input type="text" name="n1"></p>
+<p><input type="submit" value="submit"></p>
+</form>
+</body>
+</html>
+
+
+
+
+
+
+
+
