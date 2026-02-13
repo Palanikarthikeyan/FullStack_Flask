@@ -1,0 +1,207 @@
+Client --------->----------- Flask
+				|
+       ----------<--------------
+	Page response
+
+	<html>....{{variable}} ..</html>  <== render_template()
+
+Client --------->----------- Flask
+				|
+       ----------<--------------
+	 Data response // json
+       
+         {'id':..'name':...'Cost':..} // not web page - data  <== jsonify(data)
+
+REST //std way to design API
+       --------------------
+
+Client - Frontend Application / Broswer / mobileApp 
+ |
+talk to server using HTTP 
+ |
+Server expose resources(data) via URLs //use std HTTP methods
+
+##############
+
+import pprint
+pprint.pprint(data)
+
+pprint.pprint(data[5])
+
+..
+#########################
+
+# Q1: ## json -> html  ### 
+# 
+###########################################
+
+Ex
+---
+<html>
+..
+<script>
+const data={
+   pname = 'pA'
+   pid = 101
+   pfeatures = ['p1','p2']
+ };
+ ..
+</html>
+
+####
+
+import json2html
+
+--------------
+import pandas as pd
+data //json data
+df = pd.DataFrame(data)
+html = df.to_html()
+|
+write to templates/
+
+C:\Users\karth>python
+Python 3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+>>> data={"pname":"pA","pid":123,"details":["Da","Db"]}
+>>>
+>>> from json2html import json2html
+>>>
+>>> import json
+>>>
+>>> jd = json.dumps(data)
+>>>
+>>> json2html.convert(json=data)
+'<table border="1"><tr><th>pname</th><td>pA</td></tr><tr><th>pid</th><td>123</td></tr><tr><th>details</th><td><ul><li>Da</li><li>Db</li></ul></td></tr></table>'
+>>>
+>>> exit()
+
+C:\Users\karth>
+
+
+	
+-------------------------------------
+data = resource	
+
+GET  
+POST
+PUT
+DELETE
+PATCH 
+
+GET the data -> 200
+--------------
+
+-------------------------
+import requests
+requests.get(URL)
+requests.post(URL,data)
+------------------------
+
+
+from flask import Flask,jsonify
+
+app = Flask(__name__)
+
+@app.route("/api/hello",methods=['GET'])
+def f1():
+	return jsonify({"message": "Hello REST API"})
+
+if __name__ == '__main__':
+	app.run()
+
+
+127.0.0.1:5000/api/hello
+
+users=[{"id":1,"name":'Tom'},{"id":2,"name":"Leo"}]
+
+
+
+from flask import Flask,jsonify
+
+app = Flask(__name__)
+
+@app.route("/api/users",methods=['GET'])
+def f1():
+	return jsonify(users)
+
+@app.route("/api/users/<int: user_id>",methods=['GET'])
+def f2(user_id):
+	user = next((u for u in users if u['id'] == user_id),None)
+	if not user:
+		return jsonify({"error":"User not found"}),404
+	return jsonify(user)
+
+----------------------------------
+from flask import Flask,request
+
+app = Flask(__name__)
+
+@app.route("/api/users",methods=['POST'])
+def create_users():
+	data = request.json
+	#users=[{"id":1,"name":'Tom'},{"id":2,"name":"Leo"}]
+	new_user = { "id": len(users)+1,"name":data["name"]}
+	users.append(new_user)
+	return jsonify(new_user),201
+	
+
+if __name__ == '__main__':
+	app.run()
+
+
+
+from flask import Flask,jsonify
+
+app = Flask(__name__)
+
+
+@app.route("/api/users/<int: user_id>",methods=['PUT'])
+def update_user(user_id):
+	data = request.json
+	for user in users:
+		if user['id'] == user_id:
+			user["name"] = data["name"]
+			return jsonify(user)
+	return jsonify({"error": "User not found"}),404
+
+
+@app.route("/api/users/<int: user_id>",methods=['DELETE'])
+def delete_user(user_id):
+	global users
+	users = [user for user in users if user['id'] != user_id]
+	return jsonfiy({"message":"User deleted"})
+	
+curl -X DELETE http://localhost:5000/api/users/2
+
+
+
+400 - bad request
+401 - unauthorized
+404 - Not Found 
+500 - server error
+
+######################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
