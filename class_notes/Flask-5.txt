@@ -1,0 +1,36 @@
+recap REST API examples
+--------------------------
+GET
+POST
+PUT
+DELETE
+
+
+PUT - update - entire data
+Vs
+PATCH - updating the specific field
+########################################################
+
+redirect  ->Error pages
+
+403
+401
+500
+
+
+@app.route("/")
+def fx():
+	return "<h1>HomePage</h1>"
+
+@app.route("/mypage")
+def fy():
+	return redirect(url_for(fx))
+
+Redirect - control flow
+
+Post Redirect Get - PRG pattern
+===================================================================================
+@app.errorhandler is a Flask decorator used to catch errors/exceptions 
+and return a custom response instead of Flask's default error page.
+===================================================================================
+
