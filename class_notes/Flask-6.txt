@@ -1,0 +1,75 @@
+
+# Create Form Class
+
+from flask_wtf import FlaskForm
+
+from wtfforms import StringField,PasswordField,SubmitField
+from wtfforms.validators import DataRequired,Length,Email
+
+class MyLoginForm(FlaskForm):
+	email = StringField("Email",validators=[DataRequired(),Email()]
+	password = PasswordField("Password",validators=[DataRequired(),Length(min=6,max=8)])
+	submit = SubmitField("Login")
+
+
+CSRF - Cross-Site Request Forgery 
+----
+[bank-url][not-securepage]	
+		|
+  ---<----------
+  ---->------
+
+app.config['SECRET_KEY'] = 'mytoken'
+
+|
+|
+<input type="hidden" name="csrf_token" value="random_secure_token">
+
+app.config['SECRET_KEY'] = False // CSRF is disabled 
+--------------------------------
+ |->internal developement 
+ |-> API Testing
+
+
+class MyLoginForm(FlaskForm):
+	email = StringField("Email",validators=[DataRequired(),Email()]
+	password = PasswordField("Password",validators=[DataRequired(),Length(min=6,max=8)])
+	submit = SubmitField("Login")
+
+
+@app.route("/",methods=['GET','POST'])
+def login():
+   form = MyLoginForm()
+   
+   if form.validate_on_submit():
+	email = form.email.data
+	password = form.password.data
+	--------   ==================
+	return render_template('display.html',Tform = form)
+				|
+				|
+				|
+				<form method="POST">
+				  |
+				 {{Tform.hidden_tag()}}
+
+				 <div>
+				   {{Tform.username.label}}
+				   {{Tform.username()}}
+				 </div>
+				 <div>
+				   {{Tform.email.label}}
+				   {{Tform.email()}}
+				...
+				{{Tform.submit()}}
+				</form>
+		
+				{%for error in Tform.username.errors %}	
+							      ======
+				  <span style="color:red">{{error}}</span>
+				{% endfor %}
+
+----------------------------------------------------------------------------------------
+
+
+	
