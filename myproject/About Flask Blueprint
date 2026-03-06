@@ -1,0 +1,5 @@
+In Flask, a Blueprint is a way to organize your application into smaller, reusable components.
+
+When your Flask app grows (multiple modules, APIs, admin panels, authentication, etc.), putting everything in one app.py file becomes messy.
+Blueprints help you split the application into logical sections.
+
