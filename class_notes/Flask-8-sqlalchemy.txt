@@ -1,0 +1,53 @@
+SQLAlchemy
+|
+Flask
+|
+CRUD
+======================================
+
+SQL Alchemy - python lib 
+	      -----------
+		|->interact with DB.
+
+1. SQL Toolkit
+2. ORM -- Database ->table ->python class/object - instead of raw SQL
+
+DB        python
+Table --- class
+Row  ---- object
+Column  --- Attribute
+
+pip install sqlalchemy 
+
+project/
+    ---- app.py
+    ---- dbconnection.py
+    ---- users.db
+    ---- templates/
+            - file.html
+
+app = Flask(__name__)
+
+1. DB Configuration 
+    |-> Ex:  app.config['SQLALCHEMY_DATABASE_URI'] = "SQLite:///users.db"
+	     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
+
+2. create SQLAlachemy  class instance 
+
+3. Model(Table)
+   |
+  user defined class - parent class is SQLAlachemy_instance.Model <-- pre-defined class
+      ----------------
+ 	-> ..
+
+ 4. Create table 
+
+ 5. # POST operations - Route - decorator 
+
+ 6. # GET all the data(details)
+
+ 
+
+
+
+

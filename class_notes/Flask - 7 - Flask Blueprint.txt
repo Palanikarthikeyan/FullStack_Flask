@@ -1,0 +1,115 @@
+Flask Blueprint
+-----------------
+
+file: app.py
+---------------
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(/):
+..
+.
+
+@app.route("/display")
+
+..
+..
+
+--------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+from <module> import <member>
+
+from <dir1>.<sub-dir>.<module> import <member>
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+Project/
+  |
+  |-->app.py
+  |-->auth/
+  |	 |-->  __init__.py
+  |	 |-->  routes.py
+  |
+  |--blog/
+  |	|-->  __init__.py
+  |     |-->   routes.py
+
+
+from flask import Blueprint
+
+auth_bp = Blueprint('auth',__name__)
+
+@auth_bp.route("/login")
+def login():
+	....
+	...
+@auth_bp.route("/logout")
+def logout():
+	...
+
+File: app.py
+----------------
+from flask import Flask
+from auth.routes import auth_bp
+
+app = Flask(__name__)
+
+# Register blueprint
+
+app.register_blueprint(auth_bp)
+
+@app.route("/")
+def f1():
+    return ...
+
+if __name__ == '__main__':
+	app.run()
+----------------------------------------
+localhost:5000
+localhost:5000/login
+localhost:5000/logout
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+project/
+     |--> m1.py m2.py...m100.py
+     |--> m101.py m102.py Sub1/
+			    |--->m103.py
+
+     |-->SubA/
+	   |-->SubB/
+		|--->mp105.py
+------------------------------------------
+
+import m1
+import m2
+...
+100lines
+----------Vs
+
+import project <==== 
+project.<member>	
+	    |-->varible,class,function etc.,
+
+step 1: create a project folder
+step 2: copy/collect all the python files(ex: m1.py ...m106.py)
+step 3: create package initialization file (__init__.py)
+|
+step 4: Copy all the external symbols to __init__.py 
+		    -----------------    ==============
+			|->from <module> import <member>
+						  * <== import everything 
+|
+step 5: Test your module(directory/folder)
+-----------------------------------------------------------------------------------
+
+myproject/
+
+___________________________________________________________________________________________
+
+
+
+
